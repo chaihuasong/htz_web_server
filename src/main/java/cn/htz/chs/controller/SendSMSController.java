@@ -39,7 +39,7 @@ public class SendSMSController {
 
     @PostMapping("sendsms")
     public CommonResult login(String telephone, HttpServletRequest request) {
-        String code = SendSmsUtil.getFourRandomCode();
+        String code = SendSmsUtil.getSixRandomCode();
         //SendSmsUtil.send(telephone, code);
         return CommonResult.success("success", code);
     }

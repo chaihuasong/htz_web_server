@@ -91,4 +91,25 @@ public class LoginController {
     public CommonResult logout() {
         return CommonResult.success("登出成功");
     }
+
+    @PostMapping("loginsms")
+    public CommonResult loginsms(String telephone, String password) {
+        String username = telephone;
+        SysUser loginUser = userService.findByName(username);
+        if (loginUser == null) {
+            return CommonResult.error("用户名不存在");
+        }
+        String passwdWithSalt = PasswordUtil.encryptPassword(password, loginUser.getSalt());
+        if (!StringUtils.equals(loginUser.getPassword(), passwdWithSalt)) {
+            return CommonResult.error("密码错误");
+        }
+        userService.updateLoginTime(loginUser);
+        String token = JWTUtil.sign(username, passwdWithSalt);
+        LocalDateTime expireTime = LocalDateTime.now().plusSeconds(properties.getJwtTimeOut());
+        String expireTimeStr = DateUtil.formatFullTime(expireTime);
+        JWTToken jwtToken = new JWTToken(token, expireTimeStr);
+        Map<String, Object> map = new HashMap<>();
+        map.put("token", jwtToken.getToken());
+        return CommonResult.success("登录成功", map);
+    }
 }

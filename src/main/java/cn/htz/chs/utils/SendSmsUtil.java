@@ -41,19 +41,25 @@ public class SendSmsUtil {
     }
 
     /**
-     * 产生4位随机数(0000-9999)
+     * 产生6位随机数(0000-999999)
      *
-     * @return 4位随机数
+     * @return 6位随机数
      */
-    public static String getFourRandomCode() {
-        int resultCode = (int) (Math.random() * 9999);
+    public static String getSixRandomCode() {
+        int resultCode = (int) (Math.random() * 999999);
         if (resultCode < 10) {
-            return "000" + resultCode;
+            return "00000" + resultCode;
         }
         if (resultCode < 100) {
-            return "00" + resultCode;
+            return "0000" + resultCode;
         }
         if (resultCode < 1000) {
+            return "000" + resultCode;
+        }
+        if (resultCode < 10000) {
+            return "00" + resultCode;
+        }
+        if (resultCode < 10000) {
             return "0" + resultCode;
         }
 

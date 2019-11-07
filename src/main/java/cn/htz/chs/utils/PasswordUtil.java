@@ -1,5 +1,6 @@
 package cn.htz.chs.utils;
 
+import cn.htz.chs.model.LoginUser;
 import cn.htz.chs.model.SysUser;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
@@ -23,6 +24,18 @@ public class PasswordUtil {
      * @param user
      */
     public static void encryptPassword(SysUser user){
+        // 随机盐
+        String salt = randomNumberGenerator.nextBytes().toString();
+        user.setSalt(salt);
+        //将用户的注册密码经过散列算法替换成一个不可逆的新密码保存进数据，使用过程使用了盐
+        String newPassword = new SimpleHash(algorithmName, user.getPassword(), salt, hashIterations).toString();
+        user.setPassword(newPassword);
+    }
+    /**
+     * 使用盐加密密码
+     * @param user
+     */
+    public static void encryptPassword(LoginUser user){
         // 随机盐
         String salt = randomNumberGenerator.nextBytes().toString();
         user.setSalt(salt);
