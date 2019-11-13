@@ -7,12 +7,12 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class LoginUser extends BaseModel {
+public class SysLoginUser extends BaseModel {
     private String userName;
     private String password;
     @JsonIgnore
     private String salt;
-    private String nickname;
+    private String nickName;
     private String headImgUrl;
     private String phone;
     private String telephone;

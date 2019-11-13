@@ -1,8 +1,8 @@
 package cn.htz.chs.shiro.config;
 
-import org.apache.shiro.mgt.SecurityManager;
 import cn.htz.chs.jwt.JWTFilter;
 import cn.htz.chs.shiro.realm.MyShiroRealm;
+import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -45,6 +45,7 @@ public class ShiroConfig {
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不需要经过 jwt过滤器
         filterChainDefinitionMap.put("/sendsms/**", "anon");
+        filterChainDefinitionMap.put("/loginsms/**", "anon");
         // 其他所有请求默认都要经过 jwt过滤器
         filterChainDefinitionMap.put("/**", "jwt");
 
@@ -53,13 +54,13 @@ public class ShiroConfig {
     }
 
 
-
     /**
      * 身份认证realm; (这个需要自己写，账号密码校验；权限等)
+     *
      * @return
      */
     @Bean
-    public Realm realm(){
+    public Realm realm() {
         MyShiroRealm myShiroRealm = new MyShiroRealm();
         return myShiroRealm;
     }
@@ -78,7 +79,6 @@ public class ShiroConfig {
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
     }
-
 
 
 }

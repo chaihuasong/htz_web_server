@@ -1,6 +1,6 @@
 package cn.htz.chs.utils;
 
-import cn.htz.chs.model.LoginUser;
+import cn.htz.chs.model.SysLoginUser;
 import cn.htz.chs.model.SysUser;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
@@ -35,7 +35,7 @@ public class PasswordUtil {
      * 使用盐加密密码
      * @param user
      */
-    public static void encryptPassword(LoginUser user){
+    public static void encryptPassword(SysLoginUser user){
         // 随机盐
         String salt = randomNumberGenerator.nextBytes().toString();
         user.setSalt(salt);

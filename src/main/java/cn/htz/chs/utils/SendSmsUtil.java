@@ -59,7 +59,7 @@ public class SendSmsUtil {
         if (resultCode < 10000) {
             return "00" + resultCode;
         }
-        if (resultCode < 10000) {
+        if (resultCode < 100000) {
             return "0" + resultCode;
         }
 
