@@ -10,10 +10,90 @@ Target Server Type    : MYSQL
 Target Server Version : 80018
 File Encoding         : 65001
 
-Date: 2019-11-13 06:08:31
+Date: 2019-11-16 15:47:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for files
+-- ----------------------------
+DROP TABLE IF EXISTS `files`;
+CREATE TABLE `files` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ref_count` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `file_size` bigint(20) NOT NULL,
+  `mime` varchar(50) NOT NULL,
+  `sha1_hash` varchar(40) NOT NULL,
+  `url` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文件存放地址',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `create_by` varchar(50) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `last_update_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `last_update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of files
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sutras
+-- ----------------------------
+DROP TABLE IF EXISTS `sutras`;
+CREATE TABLE `sutras` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(36) NOT NULL,
+  `cover` varchar(36) NOT NULL,
+  `description` varchar(500) DEFAULT '',
+  `played_count` bigint(20) unsigned DEFAULT '0',
+  `item_total` int(10) unsigned DEFAULT '0',
+  `create_by` varchar(50) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `last_update_by` varchar(50) DEFAULT NULL,
+  `last_update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sutras_name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sutras
+-- ----------------------------
+INSERT INTO `sutras` VALUES ('1', '幸福内心禅', 'xingfuneixinchan', '幸福在哪里? 幸福就在你心里!只要能从内心感觉到自己很幸福,不论目前的境遇,你便能享有真正的幸福快乐!怎样才能有幸福的感觉?古圣先贤已把方法归纳为「心理、 生理、 事理」，若这三个方向都圆满~幸福~就这么简单！', '0', '500', '', '2019-11-16 06:21:53', null, '2019-11-16 06:21:53');
+INSERT INTO `sutras` VALUES ('2', '静心助眠养生', 'jingxinyangsheng', '世界那么大，亚健康的人那么多！失眠、浮躁、挥之不去的疲惫感……来吧，打开这部奇妙的养生宝典，在静谧禅乐与温柔引导中，邀您一起踏上身心清净之旅~', '0', '5', null, '2019-11-16 06:21:53', null, '2019-11-16 06:21:53');
+
+-- ----------------------------
+-- Table structure for sutra_items
+-- ----------------------------
+DROP TABLE IF EXISTS `sutra_items`;
+CREATE TABLE `sutra_items` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `sutra_id` varchar(36) NOT NULL,
+  `title` varchar(36) NOT NULL,
+  `description` varchar(36) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `original` varchar(36) DEFAULT '',
+  `audio_id` varchar(36) NOT NULL,
+  `lyric_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `lesson` int(10) unsigned DEFAULT NULL,
+  `played_count` bigint(20) unsigned DEFAULT '0',
+  `duration` bigint(20) unsigned NOT NULL,
+  `hash` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `create_by` varchar(50) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `last_update_by` varchar(50) DEFAULT NULL,
+  `last_update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sutra_items_title` (`title`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sutra_items
+-- ----------------------------
+INSERT INTO `sutra_items` VALUES ('1', '1', '001.幸福的诀窍', '', '', 'radio-01-20130122.mp3', '', '1', '0', '3604000', 'd41d8cd98f00b204e9800998ecf8001', 'guest', '2019-11-16 06:21:53', 'guest', '2019-11-16 06:21:53');
+INSERT INTO `sutra_items` VALUES ('2', '1', '002.烦恼的来源(此期很重要但有难度，可跳过)', '', '', 'radio-02-20130118.mp3', '1', '2', '0', '3600000', 'd41d8cd98f00b204e9800998ecf8002', null, null, null, null);
+INSERT INTO `sutra_items` VALUES ('20', '1', '003.情绪的实质', '', '', 'radio-03-20130131.mp3', '', '3', '0', '3600000', 'd41d8cd98f00b204e9800998ecf8003', null, '2019-11-16 06:29:46', null, '2019-11-16 06:29:46');
+INSERT INTO `sutra_items` VALUES ('21', '1', '004.宽两秒，心自在', '', '', 'radio-04-20130506.mp3', '', '4', '0', '3600000', 'd41d8cd98f00b204e9800998ecf8004', null, '2019-11-16 06:30:56', null, '2019-11-16 06:30:56');
 
 -- ----------------------------
 -- Table structure for sys_dept
@@ -79,11 +159,28 @@ CREATE TABLE `sys_log` (
   `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
   `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8 COMMENT='系统日志';
+) ENGINE=InnoDB AUTO_INCREMENT=226 DEFAULT CHARSET=utf8 COMMENT='系统日志';
 
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
+INSERT INTO `sys_log` VALUES ('209', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '38', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 22:17:51', 'admin', '2019-11-12 22:17:51');
+INSERT INTO `sys_log` VALUES ('210', 'admin', '查看用户', 'cn.htz.chs.controller.UserController.findPage()', '{\"columnFilters\":{\"name\":{\"name\":\"name\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '28', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 22:17:57', 'admin', '2019-11-12 22:17:57');
+INSERT INTO `sys_log` VALUES ('211', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '10', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 22:17:58', 'admin', '2019-11-12 22:17:58');
+INSERT INTO `sys_log` VALUES ('212', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '33', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 22:18:36', 'admin', '2019-11-12 22:18:36');
+INSERT INTO `sys_log` VALUES ('213', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '10', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 22:25:52', 'admin', '2019-11-12 22:25:52');
+INSERT INTO `sys_log` VALUES ('214', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '87', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 22:33:43', 'admin', '2019-11-12 22:33:43');
+INSERT INTO `sys_log` VALUES ('215', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '13', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 22:34:47', 'admin', '2019-11-12 22:34:47');
+INSERT INTO `sys_log` VALUES ('216', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '25', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 22:40:05', 'admin', '2019-11-12 22:40:05');
+INSERT INTO `sys_log` VALUES ('217', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '7', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 22:56:48', 'admin', '2019-11-12 22:56:48');
+INSERT INTO `sys_log` VALUES ('218', 'admin', '查看用户', 'cn.htz.chs.controller.UserController.findPage()', '{\"columnFilters\":{\"name\":{\"name\":\"name\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '20', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 22:56:55', 'admin', '2019-11-12 22:56:55');
+INSERT INTO `sys_log` VALUES ('219', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '11', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 22:56:57', 'admin', '2019-11-12 22:56:57');
+INSERT INTO `sys_log` VALUES ('220', 'admin', '查看用户', 'cn.htz.chs.controller.UserController.findPage()', '{\"columnFilters\":{\"name\":{\"name\":\"name\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '21', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 22:58:54', 'admin', '2019-11-12 22:58:54');
+INSERT INTO `sys_log` VALUES ('221', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '8', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 22:58:56', 'admin', '2019-11-12 22:58:56');
+INSERT INTO `sys_log` VALUES ('222', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '9', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 23:06:05', 'admin', '2019-11-12 23:06:05');
+INSERT INTO `sys_log` VALUES ('223', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '18', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 23:08:27', 'admin', '2019-11-12 23:08:27');
+INSERT INTO `sys_log` VALUES ('224', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '64', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 23:26:38', 'admin', '2019-11-12 23:26:38');
+INSERT INTO `sys_log` VALUES ('225', 'admin', '查看用户', 'cn.htz.chs.controller.LoginUserController.findPage()', '{\"columnFilters\":{\"userName\":{\"value\":\"\"}},\"pageNum\":1,\"pageSize\":10}', '8', '0:0:0:0:0:0:0:1', 'admin', '2019-11-12 23:27:03', 'admin', '2019-11-12 23:27:03');
 
 -- ----------------------------
 -- Table structure for sys_login_user
@@ -311,7 +408,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'e9e38f4785af638faee697314387606d', '8A0SUW+RWGipDZgEevhplg==', 'admin@qq.com', '13612345678', '1', '4', 'admin', '2018-08-14 11:11:11', 'admin', '2019-11-12 21:48:48', '0');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'e9e38f4785af638faee697314387606d', '8A0SUW+RWGipDZgEevhplg==', 'admin@qq.com', '13612345678', '1', '4', 'admin', '2018-08-14 11:11:11', 'admin', '2019-11-12 23:26:58', '0');
 INSERT INTO `sys_user` VALUES ('34', 'test', '7e564fd8ec6edf2f887be13f9fc0fc49', 'XF2Txq5CeBkYRxHXA/Mnvw==', 'test@qq.com', '13889700023', '1', '1', null, null, null, '2019-11-02 07:47:06', '0');
 
 -- ----------------------------

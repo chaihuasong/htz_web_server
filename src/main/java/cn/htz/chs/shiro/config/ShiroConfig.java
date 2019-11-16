@@ -46,6 +46,8 @@ public class ShiroConfig {
         // 配置不需要经过 jwt过滤器
         filterChainDefinitionMap.put("/sendsms/**", "anon");
         filterChainDefinitionMap.put("/loginsms/**", "anon");
+        filterChainDefinitionMap.put("/put/**", "anon");
+        filterChainDefinitionMap.put("/get/**", "anon");
         // 其他所有请求默认都要经过 jwt过滤器
         filterChainDefinitionMap.put("/**", "jwt");
 
