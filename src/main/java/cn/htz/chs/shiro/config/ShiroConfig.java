@@ -44,6 +44,7 @@ public class ShiroConfig {
 
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不需要经过 jwt过滤器
+        filterChainDefinitionMap.put("/getaccesstoken/**", "anon");
         filterChainDefinitionMap.put("/sendsms/**", "anon");
         filterChainDefinitionMap.put("/loginsms/**", "anon");
         filterChainDefinitionMap.put("/put/**", "anon");

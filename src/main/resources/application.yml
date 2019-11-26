@@ -21,7 +21,7 @@ mybatis-plus:
 my:
   shiro:
       # 后端免认证接口 url
-      anonUrl: /login,/actuator/*,/captcha.jpg
+      anonUrl: /login,/actuator/*,/captcha.jpg,/getaccesstoken/*
       # token有效期，单位秒
       jwtTimeOut: 3600
 
