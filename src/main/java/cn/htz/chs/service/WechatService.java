@@ -1,68 +1,33 @@
 package cn.htz.chs.service;
 
 import cn.htz.chs.utils.HttpRequest;
+import cn.htz.chs.utils.Sign;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.util.Formatter;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class WechatService {
     private static final String WX_APPID = "wx2bc72b461e524e59";
     private static final String WX_APPSECRET = "6b361dbb01bf2192113c7c63da03e1ad";
+    private int mCount = 0;
 
     /**
      * 根据jsapi_ticket等参数进行SHA1加密
      * @param url 当前页面url
      */
-    public String createSignature(String url) throws Exception {
-        String nonceStr = create_nonce_str();
-        String timestamp = create_timestamp();
-
-        String signature = "jsapi_ticket=" + getJsapiTicket();
-        signature += "&noncestr="+nonceStr;
-        signature += "×tamp="+timestamp;
-        signature += "&url="+url;
-        try {
-            MessageDigest crypt = MessageDigest.getInstance("SHA-1");
-            crypt.reset();
-            crypt.update(signature.getBytes("UTF-8"));
-            signature = byteToHex(crypt.digest());
-        } catch (Exception e) {
-        }
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("timestamp", timestamp);
-        map.put("nonceStr", nonceStr);
-        map.put("signature", signature);
-        map.put("appid", "wx2bc72b461e524e59");
+    public String createSignature(String url) {
+        String  jsapi_ticket = getJsapiTicket();
+        mCount++;
+        System.out.println("mCount------------->" + mCount);
+        System.out.println("url------------->" + url);
+        System.out.println("jsapi_ticket------------->" + jsapi_ticket);
+        Map<String, String> map = Sign.sign(jsapi_ticket, url);
+        map.put("appid", WX_APPID);
         return JSON.toJSONString(map, true);
-    }
-    private static String byteToHex(final byte[] hash) {
-        Formatter formatter = new Formatter();
-        for (byte b : hash) {
-            formatter.format("%02x", b);
-        }
-        String result = formatter.toString();
-        formatter.close();
-        return result;
-    }
-
-
-    private static String create_nonce_str() {
-        return UUID.randomUUID().toString();
-    }
-
-
-    private static String create_timestamp() {
-        return Long.toString(System.currentTimeMillis() / 1000);
     }
 
     /**
