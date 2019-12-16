@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
-public class GetAccessTokenController {
+public class GetXMLYAccessTokenController {
     @Autowired
     WechatService wechatService;
     /**
@@ -22,27 +22,10 @@ public class GetAccessTokenController {
      * @return signature
      * @throws IOException
      */
-    @GetMapping("getaccesstoken")
-    public CommonResult createSignature(String url) {
+    @GetMapping("get_xmly_accesstoken")
+    public CommonResult createSignature(String code, String state, String device_id) {
         try {
-            String rs = wechatService.createSignature(url);
-            Map<String, Object> map = new HashMap<>();
-            map.put("token", rs);
-            return CommonResult.success("成功", rs);
-        } catch (Exception e) {
-        }
-        return CommonResult.success("失败");
-    }
-    /**
-     * 微信用户证书获取
-     * @param
-     * @return signature
-     * @throws IOException
-     */
-    @GetMapping("c")
-    public CommonResult get_wx_qyaccesstoken(String url) {
-        try {
-            String rs = wechatService.createQYSignature(url);
+            String rs = "code:" + code + " state:" + state + " device_id:" + device_id;
             Map<String, Object> map = new HashMap<>();
             map.put("token", rs);
             return CommonResult.success("成功", rs);
