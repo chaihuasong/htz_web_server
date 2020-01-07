@@ -1,6 +1,8 @@
 package cn.htz.chs.utils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,5 +33,27 @@ public class DateUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
         Date d = sdf.parse(date);
         return DateUtil.getDateFormat(d, format);
+    }
+
+    public static Date strToDate(String strDate) {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = formatter.parse(strDate);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Date strToFullDate(String strDate) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:MM:ss");
+        try {
+            Date date = formatter.parse(strDate);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

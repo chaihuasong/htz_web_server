@@ -44,6 +44,15 @@ public class ShiroConfig {
 
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不需要经过 jwt过滤器
+        filterChainDefinitionMap.put("/chupai/**", "anon");
+        filterChainDefinitionMap.put("/get_hand_card/**", "anon");
+        filterChainDefinitionMap.put("/get_current_desk_card/**", "anon");
+        filterChainDefinitionMap.put("/get_chair_info/**", "anon");
+        filterChainDefinitionMap.put("/request_chair/**", "anon");
+        filterChainDefinitionMap.put("/media_stream/**", "anon");
+        filterChainDefinitionMap.put("/get_month_gk_info/**", "anon");
+        filterChainDefinitionMap.put("/get_gk_info/**", "anon");
+        filterChainDefinitionMap.put("/save_gk_info/**", "anon");
         filterChainDefinitionMap.put("/get_wx_userid/**", "anon");
         filterChainDefinitionMap.put("/save_wx_userinfo/**", "anon");
         filterChainDefinitionMap.put("/get_xiaoe_goods_list/**", "anon");

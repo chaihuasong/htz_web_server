@@ -12,7 +12,8 @@ public class CORSConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://htzshanghai.top", "http://123.htz.org.cn", "http://ximalaya.neixinchan.com")
+                //.allowedOrigins("http://htzshanghai.top", "https://changsong.net.cn","http://127.0.0.1", "http://123.htz.org.cn", "http://ximalaya.neixinchan.com")
+                .allowedOrigins("*")
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 //设置是否允许跨域传cookie

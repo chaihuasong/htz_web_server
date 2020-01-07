@@ -12,5 +12,6 @@ public class SysWxUserInfo extends WXBaseModel {
     private String province;
     private String city;
     private String language;
+    private String groupId;
     private String note;
 }

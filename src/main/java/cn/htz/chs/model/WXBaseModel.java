@@ -13,9 +13,7 @@ public class WXBaseModel {
     @TableId(value = "id",type = IdType.AUTO)
     private Long id;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date lastUpdateTime;
 }
