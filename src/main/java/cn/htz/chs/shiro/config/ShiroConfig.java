@@ -44,6 +44,7 @@ public class ShiroConfig {
 
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不需要经过 jwt过滤器
+        filterChainDefinitionMap.put("/buyao/**", "anon");
         filterChainDefinitionMap.put("/chupai/**", "anon");
         filterChainDefinitionMap.put("/get_hand_card/**", "anon");
         filterChainDefinitionMap.put("/get_current_desk_card/**", "anon");

@@ -1,12 +1,14 @@
 package cn.htz.chs.utils;
 
+import cn.htz.chs.ddz.Person;
+import com.alibaba.fastjson.JSON;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
-import java.util.TimeZone;
+import java.util.*;
 
 public class test {
     public static void main(String[] args) {
@@ -14,10 +16,17 @@ public class test {
         String date2 = "2019-12-28";
         System.out.println(strToFullDate(date).toString());
         System.out.println(strToDate(date2).toString());
-        System.out.println(new Random().nextInt(3));
-        for (int i = 0; i < 51; i++) {
-            System.out.println(i / 17);
+        Map<String, Person> info = new HashMap<>();
+        for(int i = 0; i < 3; i++) {
+            Person p = new Person();
+            p.setUnionId("unionId" + i);
+            info.put("pos" + i, p);
         }
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(info);
+        String str = jsonArray.get(0).toString();
+        System.out.println(str);
+        System.out.println(JSON.parseObject(str).get("pos0"));
     }
 
     public static Date strToFullDate(String strDate) {

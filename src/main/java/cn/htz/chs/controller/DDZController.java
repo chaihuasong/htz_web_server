@@ -43,6 +43,7 @@ public class DDZController {
         JSONObject object = new JSONObject();
         object.put("card", desk1.getCurrentCard());
         object.put("chairInfo", desk1.getChairInfo());
+        object.put("buyaoInfo", desk1.getBuyaoInfo());
         System.out.println("getCurrentDeskCard desk1.getCurrentCard():" + desk1.getCurrentCard());
         //System.out.println("getCurrentDeskCard deskId:" + deskId + " result:" + object.toString());
         return CommonResult.success("成功", object.toString());
@@ -75,6 +76,13 @@ public class DDZController {
         System.out.println("chupai:" + chupai);
         Card card = new Card(chupai, chairId);
         desk1.setCurrentCard(card);
+        return CommonResult.success("成功");
+    }
+
+    @GetMapping("buyao")
+    public CommonResult buyao(int deskId, int chairId) {
+        System.out.println("buyao deskId:" + deskId + " chairId:" + chairId);
+        desk1.setBuyaoInfo(chairId);
         return CommonResult.success("成功");
     }
 }
