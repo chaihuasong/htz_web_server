@@ -34,7 +34,7 @@ public class DDZController {
 
     @GetMapping("get_chair_info")
     public CommonResult getChairInfo(int deskId) {
-        //System.out.println("getChairInfo deskId:" + deskId + " info:" + desk1.getChairInfo());
+        System.out.println("getChairInfo deskId:" + deskId + " info:" + desk1.getChairInfo());
         return CommonResult.success("成功", desk1.getChairInfo());
     }
 

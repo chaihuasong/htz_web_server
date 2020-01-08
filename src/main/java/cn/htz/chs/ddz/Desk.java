@@ -1,7 +1,7 @@
 package cn.htz.chs.ddz;
 
 import com.alibaba.fastjson.JSON;
-import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,9 +68,7 @@ public class Desk {
     }
 
     public String getBuyaoInfo() {
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.put(mBuyaoInfo);
-        return jsonArray.get(0).toString();
+        return mBuyaoInfo.get("pos0") + "," + mBuyaoInfo.get("pos1") + "," + mBuyaoInfo.get("pos2");
     }
 
     // 随机地主，将三张底牌给地主
@@ -149,7 +147,7 @@ public class Desk {
                     return;
                 } else {
                     // 用户换桌了
-                    if (person != null && person.getUnionId() != null) {
+                    if (mChairInfo.get("pos" + chairId) != null) {
                         //请求的桌子已经有人了
                         System.out.println("requestChair fail already has people:" + person.getUnionId());
                     } else {
@@ -170,9 +168,16 @@ public class Desk {
     }
 
     public String getChairInfo() {
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.put(mChairInfo);
-        return jsonArray.get(0).toString();
+        Person p0 = mChairInfo.get("pos0");
+        Person p1 = mChairInfo.get("pos1");
+        Person p2 = mChairInfo.get("pos2");
+        StringBuffer result = new StringBuffer();
+        result.append(p0 == null ? "" : p0.getUnionId());
+        result.append(";");
+        result.append(p1 == null ? "" : p1.getUnionId());
+        result.append(";");
+        result.append(p2 == null ? "" : p2.getUnionId());
+        return result.toString();
     }
 
     public String getCurrentCard() {
