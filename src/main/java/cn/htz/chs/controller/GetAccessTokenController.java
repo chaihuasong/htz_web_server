@@ -34,15 +34,15 @@ public class GetAccessTokenController {
         return CommonResult.success("失败");
     }
     /**
-     * 微信用户证书获取
+     * 微信纸牌小游戏用户证书获取
      * @param
      * @return signature
      * @throws IOException
      */
-    @GetMapping("c")
-    public CommonResult get_wx_qyaccesstoken(String url) {
+    @GetMapping("get_zhipai_unionid")
+    public CommonResult get_zhipai_unionid() {
         try {
-            String rs = wechatService.createQYSignature(url);
+            String rs = wechatService.getUnionId();
             Map<String, Object> map = new HashMap<>();
             map.put("token", rs);
             return CommonResult.success("成功", rs);

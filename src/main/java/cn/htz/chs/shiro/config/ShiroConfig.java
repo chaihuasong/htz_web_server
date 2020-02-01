@@ -61,6 +61,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/get_xiaoe_accesstoken/**", "anon");
         filterChainDefinitionMap.put("/get_wx_qyaccesstoken/**", "anon");
         filterChainDefinitionMap.put("/get_xmly_accesstoken/**", "anon");
+        filterChainDefinitionMap.put("/get_zhipai_unionid/**", "anon");
         filterChainDefinitionMap.put("/getaccesstoken/**", "anon");
         filterChainDefinitionMap.put("/sendsms/**", "anon");
         filterChainDefinitionMap.put("/loginsms/**", "anon");

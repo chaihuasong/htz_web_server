@@ -188,7 +188,7 @@ public class Poke {
             if (shuangshunflag) {
                 List<Integer> tempPokes = new ArrayList<>();
                 for (int i = 0; i < len / 2; i++) {
-                    tempPokes.set(i, pokes.get(i * 2));
+                    tempPokes.add(pokes.get(i * 2));
                 }
                 if (shunzi(tempPokes)) {
                     return PokeType.shuangshun;
@@ -206,7 +206,7 @@ public class Poke {
             if (sanshunflag) {
                 List<Integer> tempPokes = new ArrayList<>();
                 for (int i = 0; i < len / 3; i++) {
-                    tempPokes.set(i, pokes.get(i * 3));
+                    tempPokes.add(pokes.get(i * 3));
                 }
                 if (shunzi(tempPokes)) {
                     return PokeType.sanshun;
@@ -238,9 +238,9 @@ public class Poke {
                     }
                 }
             }
-            Integer[] tempArray = (Integer[]) sanzhang.keySet().toArray();
+            List<Integer> mapKeyList = new ArrayList<Integer>(sanzhang.keySet());
             //sort(tempArray);
-            if (shunzi(intArrayToIntegerArray(tempArray))) {
+            if (shunzi(mapKeyList)) {
                 if (((sanzhang.size() == have1) && duizi.size() == 0) || ((sanzhang.size() == duizi.size()) && have1 == 0)) {
                     return PokeType.feiji;
                 }
