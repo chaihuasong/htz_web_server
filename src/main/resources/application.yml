@@ -26,10 +26,4 @@ my:
       jwtTimeOut: 3600
 
 server:
-  port: 443
-  ssl:
-    key-store: classpath:3250460_changsong.pfx
-    key-store-password: Oe43omGJ
-    key-store-type: PKCS12
-htz:
   port: 8888
